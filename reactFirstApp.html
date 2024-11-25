@@ -1,81 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React Navigation Menu</title>
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-
-        #menu {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .menu-item {
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .menu-item.active {
-            background-color: #3fc8c2;
-            color: white;
-            font-weight: bold;
-        }
-
-        #selected {
-            margin-top: 20px;
-            font-size: 16px;
-            /* font-weight: bold; */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StackOverflow Clone with Bottom Menu</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      padding-bottom: 100px;
+    }
+    .header {
+      background-color: #f48024;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-around;
+      background-color: #343a40;
+      padding: 10px;
+    }
+    .nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .nav button.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .content {
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .question:last-child {
+      border-bottom: none;
+    }
+    .bottom-nav-container {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #f8f9fa;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .selected {
+      text-align: center;
+      padding: 5px;
+      font-size: 14px;
+      background-color: #f1f1f1;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px; /* Отступ для текста "Выбрано:" */
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-evenly;
+      padding: 5px 0;
+    }
+    .bottom-nav button {
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .bottom-nav button.active {
+      background-color: #008cba;
+      color: white;
+      border-radius: 5px;
+    }
+  </style>
 </head>
-
 <body>
-    <div id="root"></div>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
 
-    <script type="text/babel">
-        function App() {
-            const [selectedMenu, setSelectedMenu] = React.useState("Главная");
+    function App() {
+      const [activePage, setActivePage] = useState("questions");
+      const [bottomNav, setBottomNav] = useState("главная");
 
-            const handleMenuClick = (menu) => {
-                setSelectedMenu(menu);
-            };
+      const pages = {
+        questions: (
+          <div>
+            <h2>Популярные вопросы</h2>
+            <div className="question">
+            <div className="question">
+              <h3>Как использовать React?</h3>
+              <p>Просмотры: 120 | Ответы: 4</p>
+            </div>
+            <div className="question">
+              <h3>Лучшие практики в JavaScript?</h3>
+              <p>Просмотры: 75 | Ответы: 2</p>
+            </div>
+            <div className="question">
+              <h3>Что такое замыкания?</h3>
+              <p>Просмотры: 50 | Ответы: 5</p>
+            </div>
+              <h3>Как работает useEffect в React?</h3>
+              <p>Просмотры: 200 | Ответы: 3 | Последний ответ: 5 минут назад</p>
+            </div>
+            <div className="question">
+              <h3>Что такое REST API?</h3>
+              <p>Просмотры: 150 | Ответы: 4 | Последний ответ: 1 день назад</p>
+            </div>
+            <div className="question">
+              <h3>Как оптимизировать производительность Node.js?</h3>
+              <p>Просмотры: 300 | Ответы: 2 | Последний ответ: 2 часа назад</p>
+            </div>
+            <div className="question">
+              <h3>Как создать асинхронную функцию в JavaScript?</h3>
+              <p>Просмотры: 180 | Ответы: 5 | Последний ответ: 3 часа назад</p>
+            </div>
+            <div className="question">
+              <h3>Почему не работает flexbox в старых браузерах?</h3>
+              <p>Просмотры: 220 | Ответы: 1 | Последний ответ: 10 минут назад</p>
+            </div>
+            <div className="question">
+              <h3>В чем разница между SQL и NoSQL?</h3>
+              <p>Просмотры: 400 | Ответы: 8 | Последний ответ: 1 час назад</p>
+            </div>
+            <div className="question">
+              <h3>Как использовать JWT для аутентификации?</h3>
+              <p>Просмотры: 320 | Ответы: 4 | Последний ответ: 2 дня назад</p>
+            </div>
+            <div className="question">
+              <h3>Какие существуют виды позиционирования в CSS?</h3>
+              <p>Просмотры: 260 | Ответы: 6 | Последний ответ: 1 час назад</p>
+            </div>
+          </div>
+        ),
+        tags: (
+          <div>
+            <h2>Популярные теги</h2>
+            <ul>
+              <li>React</li>
+              <li>JavaScript</li>
+              <li>Node.js</li>
+              <li>CSS</li>
+              <li>HTML</li>
+            </ul>
+          </div>
+        ),
+        users: (
+          <div>
+            <h2>Топ пользователи</h2>
+            <ul>
+              <li><strong>user123</strong></li>
+              <li><strong>coder456</strong></li>
+              <li><strong>dev789</strong></li>
+            </ul>
+          </div>
+        ),
+      };
 
-            const menuItems = ["Главная", "Услуги", "О нас", "Контакты"];
+      const bottomNavItems = ["главная", "услуги", "о нас", "контакты"];
 
-            return (
-                <div>
-                    <nav id="menu">
-                        {menuItems.map((item) => (
-                            <div
-                                key={item}
-                                className={`menu-item ${selectedMenu === item ? "active" : ""}`}
-                                onClick={() => handleMenuClick(item)}
-                            >
-                                {item}
-                            </div>
-                        ))}
-                    </nav>
-                    <div id="selected">
-                        Выбрано: {selectedMenu}
-                    </div>
-                </div>
-            );
-        }
-        ReactDOM.render(<App />, document.getElementById("root"));
-    </script>
+      return (
+        <div className="app">
+          <header className="header">
+            <h1>StackOverflow K1selev</h1>
+          </header>
+          <nav className="nav">
+            {["questions", "tags", "users"].map((page) => (
+              <button
+                key={page}
+                className={activePage === page ? "active" : ""}
+                onClick={() => setActivePage(page)}
+              >
+                {page === "questions" ? "Вопросы" : page === "tags" ? "Теги" : "Пользователи"}
+              </button>
+            ))}
+          </nav>
+          <main className="content">{pages[activePage]}</main>
+          <div className="bottom-nav-container">
+            <div className="selected">
+              <strong>Выбрано:</strong> {bottomNav}
+            </div>
+            <div className="bottom-nav">
+              {bottomNavItems.map((item) => (
+                <button
+                  key={item}
+                  className={bottomNav === item ? "active" : ""}
+                  onClick={() => setBottomNav(item)}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
 </body>
-
 </html>
