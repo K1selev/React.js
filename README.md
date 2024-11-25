@@ -55,6 +55,10 @@ JSX (JavaScript XML) — синтаксическое расширение JavaS
 
 рис 1. Результат работы приложения
 
+![](https://github.com/K1selev/React.js/blob/main/stackOverflow.png)
+
+рис 2. StackOverflow clone with React.js
+
 GitHub: https://github.com/K1selev/React.js
 
 
